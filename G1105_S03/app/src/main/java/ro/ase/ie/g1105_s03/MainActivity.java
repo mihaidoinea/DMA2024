@@ -1,10 +1,16 @@
 package ro.ase.ie.g1105_s03;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -14,6 +20,8 @@ import androidx.core.view.WindowInsetsCompat;
 public class MainActivity extends AppCompatActivity {
 
     EditText etInput;
+    ActivityResultLauncher<Intent> activityLauncher;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +36,32 @@ public class MainActivity extends AppCompatActivity {
         Log.d("MainActivity", "onCreate()");
         etInput = findViewById(R.id.etInput);
 
+        activityLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+            @Override
+            public void onActivityResult(ActivityResult result) {
+                int resultCode = result.getResultCode();
+                if(resultCode == RESULT_OK)
+                {
+                    Intent data = result.getData();
+                    Bundle extras = data.getExtras();
+                    String rp1 = extras.getString("rp1");
+                    Log.d("MainActivity", "Received param is: "+ rp1);
+                }
+            }
+        });
+
+    }
+
+    public void openActivity(View view)
+    {
+        Intent intent = new Intent(MainActivity.this, SecondActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("p1", etInput.getText().toString());
+        intent.putExtras(bundle);
+        //startActivity(intent);
+        activityLauncher.launch(intent);
     }
 
     @Override
