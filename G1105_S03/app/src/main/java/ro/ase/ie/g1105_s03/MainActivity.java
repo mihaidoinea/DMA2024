@@ -1,10 +1,16 @@
 package ro.ase.ie.g1105_s03;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResult;
@@ -61,7 +67,29 @@ public class MainActivity extends AppCompatActivity {
         bundle.putString("p1", etInput.getText().toString());
         intent.putExtras(bundle);
         //startActivity(intent);
-        activityLauncher.launch(intent);
+//        activityLauncher.launch(intent);
+//        Intent callIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com"));
+//        Intent callIntent = new Intent(Intent.ACTION_SEND);
+//        callIntent.putExtra(Intent.EXTRA_TEXT,"Hello from an Android app");
+//        callIntent.setType("text/plain");
+//        Intent callIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+//        startActivity(callIntent);
+
+        LinearLayout layout = findViewById(R.id.main);
+        layout.setOrientation(LinearLayout.VERTICAL);
+        //static element
+        TextView tv = new TextView(this);
+        tv.setText("Title:");
+
+        //pixel conversion
+        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+        int hPixeli = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, displayMetrics);
+        LinearLayout.LayoutParams lpt = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, hPixeli);
+        tv.setLayoutParams(lpt);
+
+        layout.addView(tv);
+        setContentView(layout);
     }
 
     @Override
