@@ -54,7 +54,17 @@ public class MainActivity extends AppCompatActivity {
                         .setPositiveButton("Do it!", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                addButton();
+                                int id = addButton();
+                                Snackbar.make(MainActivity.this, inflatedLayout, "Cancel previous action.", Snackbar.LENGTH_LONG)
+                                        .setAction("Cancel", new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                LinearLayout extra = inflatedLayout.findViewById(R.id.extraLayout);
+                                                Button viewById = extra.findViewById(id);
+                                                extra.removeView(viewById);
+                                            }
+                                        }).show();
+
                             }
                         })
                         .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -84,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
                     .setAction("Cancel", new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            
+
                         }
                     }).show();
         }
@@ -107,15 +117,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     int counter = 0;
-    public void addButton()
+    public int addButton()
     {
         LinearLayout extra = inflatedLayout.findViewById(R.id.extraLayout);
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
         int hPixels = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, displayMetrics);
         Button newBtn = new Button(MainActivity.this);
         newBtn.setText("Button_" + (++counter));
+        newBtn.setId(counter);
         ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, hPixels);
         newBtn.setLayoutParams(layoutParams);
         extra.addView(newBtn);
+        return counter;
     }
 }
