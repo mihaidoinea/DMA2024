@@ -18,6 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:onClick="showView"
             android:text="Show" />
 
         <Button
@@ -25,13 +26,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:onClick="hideView"
             android:text="Hide" />
     </LinearLayout>
 
     <include
         layout="@layout/activity_second"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <ViewStub
+        android:id="@+id/viewStub"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1" />
+        android:layout="@layout/activity_second" />
 
 </LinearLayout>
