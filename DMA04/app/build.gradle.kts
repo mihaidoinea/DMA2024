@@ -3,12 +3,12 @@ plugins {
 }
 
 android {
-    namespace = "ro.ase.ie.dma03"
+    namespace = "ro.ase.ie.dma04"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "ro.ase.ie.dma03"
-        minSdk = 29
+        applicationId = "ro.ase.ie.dma04"
+        minSdk = 24
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"

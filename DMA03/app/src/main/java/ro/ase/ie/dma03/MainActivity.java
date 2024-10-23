@@ -1,13 +1,9 @@
 package ro.ase.ie.dma03;
 
-import android.app.Activity;
-import android.app.Application;
 import android.os.Bundle;
 import android.util.Log;
 
 import androidx.activity.EdgeToEdge;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -19,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
 
     public MainActivity()
     {
-//        getApplication().registerActivityLifecycleCallbacks(new MyApp());
+        registerActivityLifecycleCallbacks(new MyApp());
     }
 
     @Override
