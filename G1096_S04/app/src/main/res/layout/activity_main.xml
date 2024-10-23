@@ -35,4 +35,10 @@
         android:layout_height="wrap_content"
         android:layout_weight="1" />
 
+    <ViewStub
+        android:id="@+id/viewStub"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout="@layout/extra_content" />
+
 </LinearLayout>
