@@ -1,6 +1,7 @@
 package ro.ase.ie.g1096_s04;
 
 import android.app.ActionBar;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
@@ -9,12 +10,16 @@ import android.view.ViewGroup;
 import android.view.ViewStub;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import com.google.android.material.snackbar.Snackbar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -66,7 +71,34 @@ public class MainActivity extends AppCompatActivity {
 
     public void hideLayout(View view)
     {
-        viewStub.setVisibility(View.GONE);
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle("Confirma actiunea...")
+                .setMessage("Doriti ascunderea controalelor?")
+                .setCancelable(true)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        viewStub.setVisibility(View.GONE);
+
+                        Snackbar.make(MainActivity.this, inflatedView, "Controalele au fost ascunse.", Snackbar.LENGTH_LONG)
+                                .setAction("Anuleaza actiunea.", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        viewStub.setVisibility(View.VISIBLE);
+                                        Toast.makeText(MainActivity.this,"Actiune anulata.", Toast.LENGTH_LONG).show();
+                                    }
+                                }).show();
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(MainActivity.this,"Operatia a fost anulata.", Toast.LENGTH_LONG).show();
+                    }
+                });
+        builder.show();
+
+
     }
 
 }
