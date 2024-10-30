@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">DMA05</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_first_fragment">Hello First fragment</string>
+    <string name="hello_second_fragment">Hello Second fragment</string>
+
+    <string-array name="genre">
+        <item>Adventure</item>
+        <item>Action</item>
+        <item>Drama</item>
+        <item>Comedy</item>
+    </string-array>
+</resources>
