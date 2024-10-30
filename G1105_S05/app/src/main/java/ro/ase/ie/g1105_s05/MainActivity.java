@@ -3,6 +3,7 @@ package ro.ase.ie.g1105_s05;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -21,6 +22,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -47,13 +50,35 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initiliazeEvents() {
-        activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+
+        activityResultLauncher = registerForActivityResult(
+                new ActivityResultContract<Intent, Movie>() {
+                    @NonNull
+                    @Override
+                    public Intent createIntent(@NonNull Context context, Intent intent) {
+                        Log.d("MainActivity", "createIntent");
+                        return intent;
+                    }
+
+                    @Override
+                    public Movie parseResult(int i, @Nullable Intent intent) {
+                        Log.d("MainActivity", "parseResult");
+                        return new Movie("Test",23.2, 32, (byte) 2,new Date(),
+                                true, Genre.Action, Status.SEEN);
+                    }
+                }, new ActivityResultCallback<Movie>() {
+                    @Override
+                    public void onActivityResult(Movie o) {
+                        Log.d("MainActivity", "onActivityResult" + o.toString());
+                    }
+                });
+/*        activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
             @Override
             public void onActivityResult(ActivityResult o) {
 
             }
-        });
+        });*/
     }
 
     @Override
@@ -69,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
         if(item.getItemId() == R.id.item_add_movie)
         {
             Intent intent = new Intent(getApplicationContext(), MovieActivity.class);
+
             activityResultLauncher.launch(intent);
             return true;
         }
