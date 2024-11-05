@@ -1,4 +1,4 @@
-package ro.ase.ie.g1096_s05;
+package ro.ase.ie.g1096_s05.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -20,6 +20,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import ro.ase.ie.g1096_s05.R;
 
 public class MainActivity extends AppCompatActivity {
 
