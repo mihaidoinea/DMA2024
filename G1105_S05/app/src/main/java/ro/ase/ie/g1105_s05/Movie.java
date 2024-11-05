@@ -1,7 +1,5 @@
 package ro.ase.ie.g1105_s05;
 
-import android.content.Intent;
-
 import java.util.Date;
 
 public class Movie {
@@ -9,15 +7,16 @@ public class Movie {
     private String title;
     private Double budget;
     private Integer duration;
-    private Byte rating;
+    private Float rating;
     private Date release;
     private Boolean recommended;
     private Genre genre;
-    private Status status;
+    private ParentalApprovalEnum status;
+    String posterUrl;
 
     public Movie(String title, Double budget, Integer duration,
-                 Byte rating, Date release, Boolean recommended,
-                 Genre genre, Status status) {
+                 Float rating, Date release, Boolean recommended,
+                 Genre genre, ParentalApprovalEnum status, String posterUrl) {
         this.title = title;
         this.budget = budget;
         this.duration = duration;
@@ -26,6 +25,7 @@ public class Movie {
         this.recommended = recommended;
         this.genre = genre;
         this.status = status;
+        this.posterUrl = posterUrl;
     }
 
     @Override
@@ -39,6 +39,7 @@ public class Movie {
                 ", recommended=" + recommended +
                 ", genre=" + genre +
                 ", status=" + status +
+                ", posterUrl=" + posterUrl +
                 '}';
     }
 }

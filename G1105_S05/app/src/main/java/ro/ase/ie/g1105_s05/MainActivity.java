@@ -11,11 +11,9 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
-import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContract;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -63,8 +61,8 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public Movie parseResult(int i, @Nullable Intent intent) {
                         Log.d("MainActivity", "parseResult");
-                        return new Movie("Test",23.2, 32, (byte) 2,new Date(),
-                                true, Genre.Action, Status.SEEN);
+                        return new Movie("Test",23.2, 32, (float) 2.5,new Date(),
+                                true, Genre.Action, ParentalApprovalEnum.PG, "http://www.google.com");
                     }
                 }, new ActivityResultCallback<Movie>() {
                     @Override
