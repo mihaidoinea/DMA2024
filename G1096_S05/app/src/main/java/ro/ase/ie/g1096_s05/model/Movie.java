@@ -14,6 +14,9 @@ public class Movie {
     private Float rating;
     private Double budget;
 
+    public Movie() {
+    }
+
     public Movie(String title, Date release, Integer duration, Boolean recommended, GenreEnum genre, ParentalApprovalEnum parentalApproval, String posterUrl, Float rating, Double budget) {
         this.title = title;
         this.release = release;
