@@ -138,6 +138,12 @@ public class MovieActivity extends AppCompatActivity {
 
             }
         });
+        movieAction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     private void initializeControls() {
