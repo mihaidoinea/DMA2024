@@ -9,15 +9,20 @@ public class Movie {
     private Boolean recommended;
     private GenreEnum genre;
     private ParentalApprovalEnum approval;
+    private String posterUrl;
+    private Double budget;
+    private Float rating;
 
-    public Movie(String title, Date release, Integer duration,
-                 Boolean recommended, GenreEnum genre, ParentalApprovalEnum status) {
+    public Movie(String title, Date release, Double duration, Boolean recommended, GenreEnum genre, ParentalApprovalEnum approval, String posterUrl, Double budget, Float rating) {
         this.title = title;
         this.release = release;
         this.duration = duration;
         this.recommended = recommended;
         this.genre = genre;
-        this.approval = status;
+        this.approval = approval;
+        this.posterUrl = posterUrl;
+        this.budget = budget;
+        this.rating = rating;
     }
 
     @Override
@@ -29,6 +34,9 @@ public class Movie {
                 ", recommended=" + recommended +
                 ", genre=" + genre +
                 ", approval=" + approval +
+                ", posterUrl='" + posterUrl + '\'' +
+                ", budget=" + budget +
+                ", rating=" + rating +
                 '}';
     }
 }
