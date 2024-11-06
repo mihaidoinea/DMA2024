@@ -9,16 +9,16 @@ public class Movie {
     private Integer duration;
     private Boolean recommended;
     private GenreEnum genre;
-    private StatusEnum status;
+    private ParentalApprovalEnum parentalApproval;
 
     public Movie(String title, Date release, Integer duration,
-                 Boolean recommended, GenreEnum genre, StatusEnum status) {
+                 Boolean recommended, GenreEnum genre, ParentalApprovalEnum status) {
         this.title = title;
         this.release = release;
         this.duration = duration;
         this.recommended = recommended;
         this.genre = genre;
-        this.status = status;
+        this.parentalApproval = status;
     }
 
     @Override
@@ -29,7 +29,7 @@ public class Movie {
                 ", duration=" + duration +
                 ", recommended=" + recommended +
                 ", genre=" + genre +
-                ", status=" + status +
+                ", parentalApproval=" + parentalApproval +
                 '}';
     }
 }
