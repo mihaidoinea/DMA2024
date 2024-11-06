@@ -125,7 +125,7 @@ public class MovieActivity extends AppCompatActivity {
                 Date release = null;
                 String poster = "";
                 Double budget = 0.0;
-                Double duration = 0.0;
+                Integer duration = 0;
                 Boolean recommended = null;
                 GenreEnum genre = null;
                 ParentalApprovalEnum status = null;

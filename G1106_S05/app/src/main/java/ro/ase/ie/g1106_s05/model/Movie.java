@@ -13,7 +13,7 @@ public class Movie {
     private Double budget;
     private Float rating;
 
-    public Movie(String title, Date release, Double duration, Boolean recommended, GenreEnum genre, ParentalApprovalEnum approval, String posterUrl, Double budget, Float rating) {
+    public Movie(String title, Date release, Integer duration, Boolean recommended, GenreEnum genre, ParentalApprovalEnum approval, String posterUrl, Double budget, Float rating) {
         this.title = title;
         this.release = release;
         this.duration = duration;
