@@ -22,8 +22,10 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 public class MovieActivity extends AppCompatActivity  {
 
@@ -65,7 +67,10 @@ public class MovieActivity extends AppCompatActivity  {
                 DatePickerDialog.OnDateSetListener onDateSetListener = new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-
+                        calendar.set(Calendar.YEAR, year);
+                        calendar.set(Calendar.MONTH, month);
+                        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                        etRelease.setText(sdf.format(calendar.getTime()));
                     }
                 };
                 DatePickerDialog dpd = new DatePickerDialog(MovieActivity.this,
@@ -131,6 +136,15 @@ public class MovieActivity extends AppCompatActivity  {
             @Override
             public void onClick(View v) {
                 Log.d(MovieTag, "Action triggered for the movie.");
+                String title = etTitle.getText().toString();
+                String poster = etPoster.getText().toString();
+                Date release = null;
+                try {
+                    release = sdf.parse(etRelease.getText().toString());
+                } catch (ParseException e) {
+                    throw new RuntimeException(e);
+                }
+//                Movie movie = new Movie(title, budget, duration, rating, release, recommended, genre, status,poster);
             }
         });
     }
