@@ -57,6 +57,10 @@ public class MovieActivity extends AppCompatActivity  {
         });
         sdf = new SimpleDateFormat("dd-MM-YYYY");
 
+        initializeControls();
+
+        initializeEvents();
+
         Intent intent = getIntent();
         movie = intent.getParcelableExtra("movieKey");
         if(movie == null)
@@ -67,9 +71,7 @@ public class MovieActivity extends AppCompatActivity  {
             movie.setGenre(Genre.values()[spGenre.getSelectedItemPosition()]);
             movie.setRecommended(swRecommended.isChecked());
         }
-        initializeControls();
 
-        initializeEvents();
     }
 
     private void initializeEvents() {
