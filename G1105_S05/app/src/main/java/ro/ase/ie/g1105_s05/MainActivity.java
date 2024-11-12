@@ -3,6 +3,7 @@ package ro.ase.ie.g1105_s05;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -59,10 +60,13 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public Movie parseResult(int i, @Nullable Intent intent) {
+                    public Movie parseResult(int resultCode, @Nullable Intent intent) {
                         Log.d("MainActivity", "parseResult");
-                        return new Movie("Test",23.2, 32, (float) 2.5,new Date(),
-                                true, Genre.Action, ParentalApprovalEnum.PG, "http://www.google.com");
+                        if(resultCode == RESULT_OK) {
+                            Movie movie = intent.getParcelableExtra("movieKey");
+                            return movie;
+                        }
+                        return null;
                     }
                 }, new ActivityResultCallback<Movie>() {
                     @Override
