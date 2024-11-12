@@ -1,6 +1,7 @@
 package ro.ase.ie.g1105_s05;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -42,6 +43,8 @@ public class MovieActivity extends AppCompatActivity  {
     private String MovieTag = MovieActivity.class.getSimpleName();
     private Calendar calendar = Calendar.getInstance();
     private SimpleDateFormat sdf;
+
+    private Movie movie = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +57,16 @@ public class MovieActivity extends AppCompatActivity  {
         });
         sdf = new SimpleDateFormat("dd-MM-YYYY");
 
+        Intent intent = getIntent();
+        movie = intent.getParcelableExtra("movieKey");
+        if(movie == null)
+        {
+            movie = new Movie();
+            movie.setRating(rbRating.getRating());
+            movie.setDuration(sbDuration.getProgress());
+            movie.setGenre(Genre.values()[spGenre.getSelectedItemPosition()]);
+            movie.setRecommended(swRecommended.isChecked());
+        }
         initializeControls();
 
         initializeEvents();
@@ -71,6 +84,8 @@ public class MovieActivity extends AppCompatActivity  {
                         calendar.set(Calendar.MONTH, month);
                         calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
                         etRelease.setText(sdf.format(calendar.getTime()));
+
+                        movie.setRelease(calendar.getTime());
                     }
                 };
                 DatePickerDialog dpd = new DatePickerDialog(MovieActivity.this,
@@ -85,7 +100,10 @@ public class MovieActivity extends AppCompatActivity  {
         spGenre.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+                Genre genre = Genre.values()[position];
+                String genreString = (String) parent.getSelectedItem();
+                Genre genre1 = Genre.valueOf(genreString);
+                movie.setGenre(genre);
             }
 
             @Override
@@ -97,7 +115,7 @@ public class MovieActivity extends AppCompatActivity  {
         sbDuration.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
+                movie.setDuration(progress);
             }
 
             @Override
@@ -114,21 +132,32 @@ public class MovieActivity extends AppCompatActivity  {
         rbRating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-
+                movie.setRating(rating);
             }
         });
 
         swRecommended.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
+                movie.setRecommended(isChecked);
             }
         });
 
         rgApproval.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-
+                ParentalApprovalEnum status = null;
+                if(checkedId == R.id.rbGeneral)
+                    status = ParentalApprovalEnum.G;
+                else if(checkedId == R.id.rbNC17)
+                    status = ParentalApprovalEnum.NC17;
+                else if(checkedId == R.id.rbR)
+                    status = ParentalApprovalEnum.R;
+                else if(checkedId == R.id.rbPG13)
+                    status = ParentalApprovalEnum.PG13;
+                else if(checkedId == R.id.rbParentGuidance)
+                    status = ParentalApprovalEnum.PG;
+                movie.setStatus(status);
             }
         });
 
@@ -138,14 +167,18 @@ public class MovieActivity extends AppCompatActivity  {
                 Log.d(MovieTag, "Action triggered for the movie.");
                 String title = etTitle.getText().toString();
                 String poster = etPoster.getText().toString();
-                Date release = null;
-                try {
-                    release = sdf.parse(etRelease.getText().toString());
-                } catch (ParseException e) {
-                    throw new RuntimeException(e);
+
+                movie.setPosterUrl(poster);
+                movie.setTitle(title);
+                movie.setBudget(Double.parseDouble(etBudget.getText().toString()));
+
+                Log.d("MovieActivity", "Movie: " + movie);
+
+                    Intent intent =new Intent();
+                    intent.putExtra("movieKey", movie);
+                    setResult(RESULT_OK, intent);
+                    finish();
                 }
-//                Movie movie = new Movie(title, budget, duration, rating, release, recommended, genre, status,poster);
-            }
         });
     }
 

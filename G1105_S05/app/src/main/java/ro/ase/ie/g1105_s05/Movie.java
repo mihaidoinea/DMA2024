@@ -1,18 +1,26 @@
 package ro.ase.ie.g1105_s05;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.Date;
 
-public class Movie {
+public class Movie implements Parcelable {
 
     private String title;
+    private Genre genre;
     private Double budget;
     private Integer duration;
     private Float rating;
-    private Date release;
     private Boolean recommended;
-    private Genre genre;
     private ParentalApprovalEnum status;
-    String posterUrl;
+    private Date release;
+    private String posterUrl;
+
+    public Movie()
+    {
+
+    }
 
     public Movie(String title, Double budget, Integer duration,
                  Float rating, Date release, Boolean recommended,
@@ -25,6 +33,142 @@ public class Movie {
         this.recommended = recommended;
         this.genre = genre;
         this.status = status;
+        this.posterUrl = posterUrl;
+    }
+
+    protected Movie(Parcel in) {
+        title = in.readString();
+        if (in.readByte() == 0) {
+            budget = null;
+        } else {
+            budget = in.readDouble();
+        }
+        if (in.readByte() == 0) {
+            duration = null;
+        } else {
+            duration = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            rating = null;
+        } else {
+            rating = in.readFloat();
+        }
+        byte tmpRecommended = in.readByte();
+        recommended = tmpRecommended == 0 ? null : tmpRecommended == 1;
+        posterUrl = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(title);
+        if (budget == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeDouble(budget);
+        }
+        if (duration == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(duration);
+        }
+        if (rating == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeFloat(rating);
+        }
+        dest.writeByte((byte) (recommended == null ? 0 : recommended ? 1 : 2));
+        dest.writeString(posterUrl);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Movie> CREATOR = new Creator<Movie>() {
+        @Override
+        public Movie createFromParcel(Parcel in) {
+            return new Movie(in);
+        }
+
+        @Override
+        public Movie[] newArray(int size) {
+            return new Movie[size];
+        }
+    };
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public Genre getGenre() {
+        return genre;
+    }
+
+    public void setGenre(Genre genre) {
+        this.genre = genre;
+    }
+
+    public Double getBudget() {
+        return budget;
+    }
+
+    public void setBudget(Double budget) {
+        this.budget = budget;
+    }
+
+    public Integer getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Integer duration) {
+        this.duration = duration;
+    }
+
+    public Float getRating() {
+        return rating;
+    }
+
+    public void setRating(Float rating) {
+        this.rating = rating;
+    }
+
+    public Boolean getRecommended() {
+        return recommended;
+    }
+
+    public void setRecommended(Boolean recommended) {
+        this.recommended = recommended;
+    }
+
+    public ParentalApprovalEnum getStatus() {
+        return status;
+    }
+
+    public void setStatus(ParentalApprovalEnum status) {
+        this.status = status;
+    }
+
+    public Date getRelease() {
+        return release;
+    }
+
+    public void setRelease(Date release) {
+        this.release = release;
+    }
+
+    public String getPosterUrl() {
+        return posterUrl;
+    }
+
+    public void setPosterUrl(String posterUrl) {
         this.posterUrl = posterUrl;
     }
 
