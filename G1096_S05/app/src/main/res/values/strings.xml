@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">G1096_S05</string>
+    <string-array name="genreValues">
+        <item>Adventure</item>
+        <item>Comedy</item>
+        <item>Drama</item>
+        <item>Action</item>
+    </string-array>
 </resources>

@@ -25,6 +25,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import ro.ase.ie.g1096_s05.R;
+import ro.ase.ie.g1096_s05.model.GenreEnum;
 import ro.ase.ie.g1096_s05.model.Movie;
 
 public class MovieActivity extends AppCompatActivity {
@@ -58,9 +59,9 @@ public class MovieActivity extends AppCompatActivity {
         Intent intent = getIntent();
         movie = intent.getParcelableExtra("movieKey");
         //if not it means we add a new movie instance to the collection
-        if (movie == null)
+        if (movie == null) {
             movie = new Movie();
-
+        }
         initializeControls();
 
         initializeEvents();
@@ -81,6 +82,8 @@ public class MovieActivity extends AppCompatActivity {
                         String date = sdf.format(calendar.getTime());
                         etRelease.setText(date);
 
+                        movie.setRelease(calendar.getTime());
+
                     }
                 };
                 DatePickerDialog dpd = new DatePickerDialog(MovieActivity.this,
@@ -94,7 +97,7 @@ public class MovieActivity extends AppCompatActivity {
         swRecommended.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
+                movie.setRecommended(isChecked);
             }
         });
 
