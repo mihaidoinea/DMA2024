@@ -20,6 +20,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import ro.ase.ie.g1106_s05.R;
@@ -121,8 +123,14 @@ public class MovieActivity extends AppCompatActivity {
         movieAction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-YYYY");
                 String title = etTitle.getText().toString();
                 Date release = null;
+                try {
+                    release = sdf.parse(etRelease.getText().toString());
+                } catch (ParseException e) {
+                    throw new RuntimeException(e);
+                }
                 String poster = "";
                 Double budget = 0.0;
                 Integer duration = 0;
