@@ -1,11 +1,14 @@
 package ro.ase.ie.g1106_s05.activities;
 
+import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.RatingBar;
@@ -22,6 +25,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import ro.ase.ie.g1106_s05.R;
@@ -42,6 +46,9 @@ public class MovieActivity extends AppCompatActivity {
     private Button movieAction;
     private RatingBar rbRating;
 
+    Movie movie = null;
+    Calendar calendar = Calendar.getInstance();
+    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-YYYY");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,20 +63,55 @@ public class MovieActivity extends AppCompatActivity {
         initializeControls();
 
         initializeEvents();
+
+        Intent intent = getIntent();
+/*        Bundle extras = intent.getExtras();
+        extras.getString("keyname");*/
+        movie = intent.getParcelableExtra("movieKey");
+        if (movie == null) {
+            movie = new Movie();
+            movie.setGenre(GenreEnum.valueOf(spGenre.getSelectedItem().toString()));
+            movie.setDuration(sbDuration.getProgress());
+            movie.setRecommended(swRecommended.isChecked());
+            movie.setRating(rbRating.getRating());
+        }
+
     }
 
     private void initializeEvents() {
+
+        etRelease.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatePickerDialog.OnDateSetListener onDateSetListener = new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        calendar.set(Calendar.YEAR, year);
+                        calendar.set(Calendar.MONTH, month);
+                        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                        etRelease.setText(sdf.format(calendar.getTime()));
+                        movie.setRelease(calendar.getTime());
+                    }
+                };
+                DatePickerDialog dpd = new DatePickerDialog(MovieActivity.this, onDateSetListener,
+                        calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+
+                dpd.show();
+            }
+        });
+
         rbRating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
                 Toast.makeText(MovieActivity.this, "Rating: " + rating, Toast.LENGTH_LONG).show();
+                movie.setRating(rating);
             }
         });
         sbDuration.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 Toast.makeText(MovieActivity.this, "Duration: " + progress, Toast.LENGTH_SHORT).show();
-
+                movie.setDuration(progress);
             }
 
             @Override
@@ -87,6 +129,8 @@ public class MovieActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String genre = "Genre: " + parent.getSelectedItem();
                 Toast.makeText(MovieActivity.this, genre, Toast.LENGTH_SHORT).show();
+                movie.setGenre(GenreEnum.valueOf(parent.getSelectedItem().toString()));
+//                movie.setGenre(GenreEnum.values()[position]);
             }
 
             @Override
@@ -98,6 +142,7 @@ public class MovieActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 Toast.makeText(MovieActivity.this, "Recommended: " + isChecked, Toast.LENGTH_SHORT).show();
+                movie.setRecommended(isChecked);
             }
         });
 
@@ -116,29 +161,21 @@ public class MovieActivity extends AppCompatActivity {
                 if (checkedId == R.id.rbParentGuidance)
                     pae = ParentalApprovalEnum.PG;
                 Toast.makeText(MovieActivity.this, "Parental approval: " + pae.toString(), Toast.LENGTH_SHORT).show();
-
+                movie.setApproval(pae);
             }
         });
 
         movieAction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-YYYY");
-                String title = etTitle.getText().toString();
-                Date release = null;
-                try {
-                    release = sdf.parse(etRelease.getText().toString());
-                } catch (ParseException e) {
-                    throw new RuntimeException(e);
-                }
-                String poster = "";
-                Double budget = 0.0;
-                Integer duration = 0;
-                Boolean recommended = null;
-                GenreEnum genre = null;
-                ParentalApprovalEnum status = null;
-                Float rating = 0f;
-                Movie movie = new Movie(title, release, duration, recommended, genre, status, poster, budget, rating);
+                movie.setTitle(etTitle.getText().toString());
+                movie.setBudget(Double.parseDouble(etBudget.getText().toString()));
+                movie.setPosterUrl(etPoster.getText().toString());
+
+                Intent intent = new Intent();
+                intent.putExtra("movieKey", movie);
+                setResult(RESULT_OK, intent);
+                finish();
             }
         });
     }
