@@ -27,6 +27,7 @@ import java.util.Calendar;
 import ro.ase.ie.g1096_s05.R;
 import ro.ase.ie.g1096_s05.model.GenreEnum;
 import ro.ase.ie.g1096_s05.model.Movie;
+import ro.ase.ie.g1096_s05.model.ParentalApprovalEnum;
 
 public class MovieActivity extends AppCompatActivity {
 
@@ -55,16 +56,22 @@ public class MovieActivity extends AppCompatActivity {
         });
         calendar = Calendar.getInstance();
 
+        initializeControls();
+
+        initializeEvents();
+
         //test to see a parameter has been received for updating it
         Intent intent = getIntent();
         movie = intent.getParcelableExtra("movieKey");
         //if not it means we add a new movie instance to the collection
         if (movie == null) {
             movie = new Movie();
+            movie.setGenre(GenreEnum.valueOf(spGenre.getSelectedItem().toString()));
+            movie.setGenre(GenreEnum.values()[spGenre.getSelectedItemPosition()]);
+            movie.setDuration(sbDuration.getProgress());
+            movie.setRating(rbRating.getRating());
+            movie.setParentalApproval(ParentalApprovalEnum.G);
         }
-        initializeControls();
-
-        initializeEvents();
 
     }
 
@@ -144,7 +151,15 @@ public class MovieActivity extends AppCompatActivity {
         movieAction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                movie.setTitle(etTitle.getText().toString());
+                movie.setBudget(Double.parseDouble(etBudget.getText().toString()));
+                movie.setPosterUrl(etPoster.getText().toString());
 
+                Intent intent = new Intent();
+                Bundle extras = intent.getExtras();
+                extras.putParcelable("movieKey", movie);
+                setResult(RESULT_OK, intent);
+                finish();
             }
         });
     }

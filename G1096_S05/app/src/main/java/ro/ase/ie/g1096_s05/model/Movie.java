@@ -1,8 +1,11 @@
 package ro.ase.ie.g1096_s05.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.Date;
 
-public class Movie {
+public class Movie implements Parcelable {
 
     private String title;
     private Date release;
@@ -28,6 +31,70 @@ public class Movie {
         this.rating = rating;
         this.budget = budget;
     }
+
+    protected Movie(Parcel in) {
+        title = in.readString();
+        if (in.readByte() == 0) {
+            duration = null;
+        } else {
+            duration = in.readInt();
+        }
+        byte tmpRecommended = in.readByte();
+        recommended = tmpRecommended == 0 ? null : tmpRecommended == 1;
+        posterUrl = in.readString();
+        if (in.readByte() == 0) {
+            rating = null;
+        } else {
+            rating = in.readFloat();
+        }
+        if (in.readByte() == 0) {
+            budget = null;
+        } else {
+            budget = in.readDouble();
+        }
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(title);
+        if (duration == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(duration);
+        }
+        dest.writeByte((byte) (recommended == null ? 0 : recommended ? 1 : 2));
+        dest.writeString(posterUrl);
+        if (rating == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeFloat(rating);
+        }
+        if (budget == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeDouble(budget);
+        }
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Movie> CREATOR = new Creator<Movie>() {
+        @Override
+        public Movie createFromParcel(Parcel in) {
+            return new Movie(in);
+        }
+
+        @Override
+        public Movie[] newArray(int size) {
+            return new Movie[size];
+        }
+    };
 
     @Override
     public String toString() {
