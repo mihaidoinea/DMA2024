@@ -111,7 +111,7 @@ public class MovieActivity extends AppCompatActivity {
         spGenre.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+                movie.setGenre(GenreEnum.valueOf(parent.getSelectedItem().toString()));
             }
 
             @Override
@@ -123,7 +123,7 @@ public class MovieActivity extends AppCompatActivity {
         sbDuration.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
+                movie.setDuration(progress);
             }
 
             @Override
@@ -139,13 +139,24 @@ public class MovieActivity extends AppCompatActivity {
         rgApproval.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-
+                ParentalApprovalEnum pae = null;
+                if (checkedId == R.id.rbGeneral)
+                    pae = ParentalApprovalEnum.G;
+                else if (checkedId == R.id.rbNC17)
+                    pae = ParentalApprovalEnum.NC17;
+                else if (checkedId == R.id.rbR)
+                    pae = ParentalApprovalEnum.R;
+                else if (checkedId == R.id.rbPG13)
+                    pae = ParentalApprovalEnum.PG13;
+                else if (checkedId == R.id.rbParentGuidance)
+                    pae = ParentalApprovalEnum.PG;
+                movie.setParentalApproval(pae);
             }
         });
         rbRating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-
+                movie.setRating(rating);
             }
         });
         movieAction.setOnClickListener(new View.OnClickListener() {
@@ -156,8 +167,10 @@ public class MovieActivity extends AppCompatActivity {
                 movie.setPosterUrl(etPoster.getText().toString());
 
                 Intent intent = new Intent();
-                Bundle extras = intent.getExtras();
-                extras.putParcelable("movieKey", movie);
+                intent.putExtra("movieKey", movie);
+
+              /*  Bundle extras = intent.getExtras();
+                extras.putParcelable("movieKey", movie);*/
                 setResult(RESULT_OK, intent);
                 finish();
             }
