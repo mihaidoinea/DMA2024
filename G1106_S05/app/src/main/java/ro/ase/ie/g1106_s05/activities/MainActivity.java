@@ -56,12 +56,16 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public Movie parseResult(int resultCode, @Nullable Intent intent) {
-                return null;
+                Movie movie = null;
+                if (resultCode == RESULT_OK) {
+                    movie = intent.getParcelableExtra("movieKey");
+                }
+                return movie;
             }
         }, new ActivityResultCallback<Movie>() {
             @Override
             public void onActivityResult(Movie o) {
-
+                Log.d("MainActivity", "Movie: " + o);
             }
         });
     }
