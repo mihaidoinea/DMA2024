@@ -1,6 +1,8 @@
 package ro.ase.ie.dma07;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
@@ -13,6 +15,10 @@ import androidx.core.view.WindowInsetsCompat;
 import java.security.SecureRandom;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
@@ -46,6 +52,56 @@ public class MainActivity extends AppCompatActivity {
         });
 
         trustEveryone();
+
+        ivAsync = findViewById(R.id.ivAsync);
+        ivCallable = findViewById(R.id.ivCallable);
+        ivRunnable = findViewById(R.id.ivRunnable);
+        ivThread = findViewById(R.id.ivThread);
+
+        btnAsync = findViewById(R.id.btnAsync);
+        btnCallable = findViewById(R.id.btnCallable);
+        btnRunnable = findViewById(R.id.btnRunnable);
+        btnThread = findViewById(R.id.btnThreads);
+
+
+        btnAsync.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DownloadAsyncTask dat = new DownloadAsyncTask()
+                {
+                    @Override
+                    protected void onPostExecute(Bitmap bitmap) {
+                        super.onPostExecute(bitmap);
+                        ivAsync.setImageBitmap(bitmap);
+                    }
+                };
+                dat.execute(movieUrl);
+            }
+        });
+
+        btnCallable.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ExecutorService executorService = Executors.newFixedThreadPool(3);
+                Future<Bitmap> future = executorService.submit(new DownloadCallableTask(movieUrl));
+                try {
+                    ivCallable.setImageBitmap(future.get());
+                } catch (ExecutionException e) {
+                    throw new RuntimeException(e);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
+        btnRunnable.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DownloadRunnableTask drt = new DownloadRunnableTask(movieUrl, ivRunnable);
+                Thread thread = new Thread(drt);
+                thread.start();
+            }
+        });
     }
 
 
