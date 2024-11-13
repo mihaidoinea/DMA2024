@@ -52,6 +52,13 @@ public class Movie implements Parcelable {
         } else {
             budget = in.readDouble();
         }
+        if (in.readByte() == 0) {
+            release = null;
+        } else {
+            release = new Date(in.readLong());
+        }
+        genre = GenreEnum.valueOf(in.readString());
+        parentalApproval = ParentalApprovalEnum.valueOf(in.readString());
     }
 
     @Override
@@ -77,6 +84,16 @@ public class Movie implements Parcelable {
             dest.writeByte((byte) 1);
             dest.writeDouble(budget);
         }
+
+        if (release == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(release.getTime());
+        }
+
+        dest.writeString(genre.toString());
+        dest.writeString(parentalApproval.toString());
     }
 
     @Override
