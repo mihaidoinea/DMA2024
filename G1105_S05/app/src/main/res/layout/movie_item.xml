@@ -12,7 +12,6 @@
         <TextView
             android:id="@+id/tvTitle"
             android:textSize="20sp"
-            android:layout_marginBottom="15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="TextView" />
@@ -25,22 +24,48 @@
 
         <RatingBar
             android:id="@+id/rbRating"
-            android:max="5"
             android:layout_width="wrap_content"
+            android:max="5"
             android:layout_height="wrap_content" />
 
+        <RadioGroup
+            android:id="@+id/rgOptions"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rbExport"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Export" />
+
+            <RadioButton
+                android:id="@+id/rbDisplay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Display" />
+        </RadioGroup>
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/ivPoster"
-        android:layout_width="100dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:src="@android:drawable/dialog_frame" />
+        android:orientation="vertical">
 
-    <CheckBox
-        android:id="@+id/cbSelected"
-        android:layout_gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/ivPoster"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@android:drawable/alert_dark_frame" />
+
+        <Button
+            android:id="@+id/btnDelete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Delete" />
+    </LinearLayout>
+
 </LinearLayout>
