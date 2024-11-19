@@ -22,12 +22,15 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
     ActivityResultLauncher<Intent> activityResultLauncher;
     ListView lvMovies;
+
+    static ArrayList<Movie> movieArrayList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,8 +73,8 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }, new ActivityResultCallback<Movie>() {
                     @Override
-                    public void onActivityResult(Movie o) {
-                        Log.d("MainActivity", "onActivityResult" + o.toString());
+                    public void onActivityResult(Movie movie) {
+                        Log.d("MainActivity", "onActivityResult" + movie.toString());
                     }
                 });
 /*        activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),

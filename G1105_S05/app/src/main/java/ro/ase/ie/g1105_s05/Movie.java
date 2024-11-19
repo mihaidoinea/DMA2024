@@ -17,6 +17,7 @@ public class Movie implements Parcelable {
     private Date release;
     private String posterUrl;
 
+
     public Movie()
     {
 
