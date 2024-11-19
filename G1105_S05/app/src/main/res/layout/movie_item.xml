@@ -10,26 +10,26 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/tvTitle"
+            android:id="@+id/movieTitle"
             android:textSize="20sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="TextView" />
 
         <TextView
-            android:id="@+id/tvRelease"
+            android:id="@+id/movieRelease"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="TextView" />
 
         <RatingBar
-            android:id="@+id/rbRating"
+            android:id="@+id/movieRating"
             android:layout_width="wrap_content"
             android:max="5"
             android:layout_height="wrap_content" />
 
         <RadioGroup
-            android:id="@+id/rgOptions"
+            android:id="@+id/movieOptions"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_horizontal"
@@ -42,10 +42,10 @@
                 android:text="Export" />
 
             <RadioButton
-                android:id="@+id/rbDisplay"
+                android:id="@+id/rbPersist"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Display" />
+                android:text="Persist" />
         </RadioGroup>
     </LinearLayout>
 
@@ -55,14 +55,14 @@
         android:orientation="vertical">
 
         <ImageView
-            android:id="@+id/ivPoster"
+            android:id="@+id/moviePoster"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:src="@android:drawable/alert_dark_frame" />
 
         <Button
-            android:id="@+id/btnDelete"
+            android:id="@+id/movieDelete"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Delete" />

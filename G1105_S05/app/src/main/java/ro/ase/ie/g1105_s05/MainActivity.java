@@ -21,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -29,8 +30,10 @@ public class MainActivity extends AppCompatActivity {
 
     ActivityResultLauncher<Intent> activityResultLauncher;
     ListView lvMovies;
+    RecyclerView rvMovies;
 
     static ArrayList<Movie> movieArrayList = new ArrayList<>();
+    MovieAdapter movieAdapter = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,15 +46,23 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        initiliazeEvents();
+        Movie movie = new Movie("Test",2131.2,12, Float.parseFloat("2.5"),new Date(),
+                true, Genre.Action, ParentalApprovalEnum.PG13, "www.gogog.com");
+       // movieArrayList.add(movie);
+        movieAdapter = new MovieAdapter(movieArrayList, MainActivity.this);
+
         initializeControls();
+
+        initiliazeEvents();
     }
 
     private void initializeControls() {
-        lvMovies = findViewById(R.id.lvMovies);
+        rvMovies = findViewById(R.id.rvMovies);
     }
 
     private void initiliazeEvents() {
+
+        rvMovies.setAdapter(movieAdapter);
 
         activityResultLauncher = registerForActivityResult(
                 new ActivityResultContract<Intent, Movie>() {
@@ -74,7 +85,13 @@ public class MainActivity extends AppCompatActivity {
                 }, new ActivityResultCallback<Movie>() {
                     @Override
                     public void onActivityResult(Movie movie) {
-                        Log.d("MainActivity", "onActivityResult" + movie.toString());
+                        if (movie != null) {
+                            Log.d("MainActivity", "onActivityResult" + movie.toString());
+                            movieArrayList.add(movie);
+                            movieAdapter.notifyDataSetChanged();
+                            int position = movieArrayList.indexOf(movie);
+                            movieAdapter.notifyItemChanged(position);
+                        }
                     }
                 });
 /*        activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),

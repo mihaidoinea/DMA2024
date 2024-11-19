@@ -57,6 +57,9 @@ public class Movie implements Parcelable {
         byte tmpRecommended = in.readByte();
         recommended = tmpRecommended == 0 ? null : tmpRecommended == 1;
         posterUrl = in.readString();
+        release = new Date(in.readLong());
+        genre = Genre.valueOf(in.readString());
+        status = ParentalApprovalEnum.valueOf(in.readString());
     }
 
     @Override
@@ -82,6 +85,9 @@ public class Movie implements Parcelable {
         }
         dest.writeByte((byte) (recommended == null ? 0 : recommended ? 1 : 2));
         dest.writeString(posterUrl);
+        dest.writeLong(release.getTime());
+        dest.writeString(genre.toString());
+        dest.writeString(status.toString());
     }
 
     @Override
