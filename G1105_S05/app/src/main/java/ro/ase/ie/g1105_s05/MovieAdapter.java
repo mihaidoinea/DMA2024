@@ -40,7 +40,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieHolder> {
         holder.movieRating.setRating(movie.getRating());
         holder.movieRelease.setText(sdf.format(movie.getRelease()));
 
-        String name = "sherlock_holmes.jpg";
+        String name = "sherlock_holmes";
         int drawable = context.getResources()
                 .getIdentifier(name, "drawable", context.getPackageName());
         holder.moviePoster.setImageResource(drawable);
