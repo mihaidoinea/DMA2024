@@ -26,9 +26,14 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSession;
 import javax.net.ssl.X509TrustManager;
 
+import retrofit2.Retrofit;
+
 public class MainActivity extends AppCompatActivity {
 
     private String movieUrl = "https://www.joblo.com/wp-content/uploads/2020/09/enola-review-face.jpg";
+    private static final String RECIPE_GET_JSON = "https://jsonkeeper.com/b/OCIE";
+    private static final String RECIPE_POST_JSON = "https://webhook.site/b300cd9b-886c-4361-8f41-1ef8c2882624";
+
 
     private Button btnAsync;
     private Button btnCallable;
@@ -91,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
+
             }
         });
 
