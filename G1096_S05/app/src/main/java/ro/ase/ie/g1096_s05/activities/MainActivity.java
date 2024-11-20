@@ -20,6 +20,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
 
 import ro.ase.ie.g1096_s05.R;
 import ro.ase.ie.g1096_s05.model.Movie;
@@ -27,7 +30,10 @@ import ro.ase.ie.g1096_s05.model.Movie;
 public class MainActivity extends AppCompatActivity {
 
     private ActivityResultLauncher<Intent> activityLauncher;
-    private ListView lvMovies;
+    //    private ListView lvMovies;
+    private RecyclerView rvMovies;
+    private static ArrayList<Movie> movieArrayList = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +45,9 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        lvMovies = findViewById(R.id.lvMovies);
+
+        rvMovies = findViewById(R.id.rvMovies);
+
         activityLauncher = registerForActivityResult(new ActivityResultContract<Intent, Movie>() {
             @NonNull
             @Override
@@ -57,8 +65,11 @@ public class MainActivity extends AppCompatActivity {
             }
         }, new ActivityResultCallback<Movie>() {
             @Override
-            public void onActivityResult(Movie o) {
-                Log.d("MainActivity", "Movie: " + o);
+            public void onActivityResult(Movie movie) {
+                if (movie != null) {
+                    Log.d("MainActivity", "Movie: " + movie);
+                    movieArrayList.add(movie);
+                }
             }
         });
     }
