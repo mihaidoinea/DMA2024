@@ -83,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
                 if (movie != null) {
                     Log.d("MainActivity", "Movie: " + movie);
                     movieList.add(movie);
+                    movieAdapter.notifyDataSetChanged();
                 }
             }
         });
