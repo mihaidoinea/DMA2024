@@ -167,6 +167,42 @@ public class Movie implements Parcelable {
         this.rating = rating;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public Date getRelease() {
+        return release;
+    }
+
+    public Integer getDuration() {
+        return duration;
+    }
+
+    public Boolean getRecommended() {
+        return recommended;
+    }
+
+    public GenreEnum getGenre() {
+        return genre;
+    }
+
+    public ParentalApprovalEnum getApproval() {
+        return approval;
+    }
+
+    public String getPosterUrl() {
+        return posterUrl;
+    }
+
+    public Double getBudget() {
+        return budget;
+    }
+
+    public Float getRating() {
+        return rating;
+    }
+
     @Override
     public String toString() {
         return "Movie{" +

@@ -25,6 +25,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import ro.ase.ie.g1106_s05.R;
+import ro.ase.ie.g1106_s05.adapters.MovieAdapter;
 import ro.ase.ie.g1106_s05.model.Movie;
 
 public class MainActivity extends AppCompatActivity {
@@ -35,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView rvMovies;
 
     static ArrayList<Movie> movieList = new ArrayList<>();
+    MovieAdapter movieAdapter = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,12 +50,17 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
+        movieAdapter = new MovieAdapter(movieList, MainActivity.this);
+
         initializeControls();
 
         initializeEvents();
     }
 
     private void initializeEvents() {
+
+        rvMovies.setAdapter(movieAdapter);
+
         activityLauncher = registerForActivityResult(new ActivityResultContract<Intent, Movie>() {
             @NonNull
             @Override
