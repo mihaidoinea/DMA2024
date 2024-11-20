@@ -163,4 +163,40 @@ public class Movie implements Parcelable {
     public void setBudget(Double budget) {
         this.budget = budget;
     }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public Date getRelease() {
+        return release;
+    }
+
+    public Integer getDuration() {
+        return duration;
+    }
+
+    public Boolean getRecommended() {
+        return recommended;
+    }
+
+    public GenreEnum getGenre() {
+        return genre;
+    }
+
+    public ParentalApprovalEnum getParentalApproval() {
+        return parentalApproval;
+    }
+
+    public String getPosterUrl() {
+        return posterUrl;
+    }
+
+    public Float getRating() {
+        return rating;
+    }
+
+    public Double getBudget() {
+        return budget;
+    }
 }

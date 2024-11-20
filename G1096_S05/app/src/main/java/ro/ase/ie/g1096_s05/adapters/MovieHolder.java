@@ -14,12 +14,12 @@ import ro.ase.ie.g1096_s05.R;
 
 public class MovieHolder extends RecyclerView.ViewHolder {
 
-    private TextView movieTitle;
-    private TextView movieRelease;
-    private ImageView moviePoster;
-    private RatingBar movieRating;
-    private Button movieDelete;
-    private RadioGroup movieOptions;
+    TextView movieTitle;
+    TextView movieRelease;
+    ImageView moviePoster;
+    RatingBar movieRating;
+    Button movieDelete;
+    RadioGroup movieOptions;
 
     public MovieHolder(@NonNull View itemView) {
         super(itemView);
@@ -30,4 +30,5 @@ public class MovieHolder extends RecyclerView.ViewHolder {
         movieDelete = itemView.findViewById(R.id.movieDelete);
         movieOptions = itemView.findViewById(R.id.movieOptions);
     }
+
 }
