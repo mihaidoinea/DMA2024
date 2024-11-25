@@ -95,4 +95,10 @@
                 android:src="@android:drawable/alert_dark_frame" />
         </LinearLayout>
     </LinearLayout>
+
+    <Button
+        android:id="@+id/btGetRecipe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Get Json" />
 </LinearLayout>

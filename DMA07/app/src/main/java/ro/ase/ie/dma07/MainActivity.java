@@ -2,6 +2,7 @@ package ro.ase.ie.dma07;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -15,6 +16,7 @@ import androidx.core.view.WindowInsetsCompat;
 import java.security.SecureRandom;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -32,13 +34,14 @@ public class MainActivity extends AppCompatActivity {
 
     private String movieUrl = "https://www.joblo.com/wp-content/uploads/2020/09/enola-review-face.jpg";
     private static final String RECIPE_GET_JSON = "https://jsonkeeper.com/b/OCIE";
-    private static final String RECIPE_POST_JSON = "https://webhook.site/b300cd9b-886c-4361-8f41-1ef8c2882624";
+    private static final String RECIPE_POST_JSON = "https://dummyjson.com/posts/add";
 
 
     private Button btnAsync;
     private Button btnCallable;
     private Button btnThread;
     private Button btnRunnable;
+    private Button btnGetJson;
 
     private ImageView ivAsync;
     private ImageView ivCallable;
@@ -67,6 +70,29 @@ public class MainActivity extends AppCompatActivity {
         btnCallable = findViewById(R.id.btnCallable);
         btnRunnable = findViewById(R.id.btnRunnable);
         btnThread = findViewById(R.id.btnThreads);
+        btnGetJson = findViewById(R.id.btGetRecipe);
+
+        btnGetJson.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        HttpConnectionService httpConnectionService = new HttpConnectionService(RECIPE_GET_JSON);
+                        String jsonObject = httpConnectionService.getData();
+                        List<Recipe> recipes = RecipeJsonParser.fromJson(jsonObject);
+                        for(Recipe recipe:recipes)
+                        {
+                            Log.d("MainActivity", recipe.toString());
+                        }
+                        httpConnectionService = new HttpConnectionService(RECIPE_POST_JSON);
+                        String jsonArray = RecipeJsonParser.toJson(recipes);
+                        httpConnectionService.postData(jsonArray);
+                    }
+                });
+                thread.start();
+            }
+        });
 
 
         btnAsync.setOnClickListener(new View.OnClickListener() {
