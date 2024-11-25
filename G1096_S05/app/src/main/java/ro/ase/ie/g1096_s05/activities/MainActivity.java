@@ -71,9 +71,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onActivityResult(Movie movie) {
                 if (movie != null) {
-                    Log.d("MainActivity", "Movie: " + movie);
-                    movieArrayList.add(movie);
-                    movieAdapter.notifyDataSetChanged();
+
+                    if (!movieArrayList.contains(movie)) {
+                        Log.d("MainActivity", "Movie: " + movie);
+                        movieArrayList.add(movie);
+                        movieAdapter.notifyDataSetChanged();
+                    } else {
+                        Log.d("MainActivity", "Duplicate Movie: " + movie);
+                    }
                 }
             }
         });

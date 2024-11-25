@@ -85,6 +85,11 @@ public class MovieActivity extends AppCompatActivity {
                         calendar.set(Calendar.YEAR, year);
                         calendar.set(Calendar.MONTH, month);
                         calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                        calendar.set(Calendar.HOUR, 0);
+                        calendar.set(Calendar.MINUTE, 0);
+                        calendar.set(Calendar.SECOND, 0);
+                        calendar.set(Calendar.MILLISECOND, 0);
+
                         SimpleDateFormat sdf = new SimpleDateFormat("dd-MMMM-yyyy");
                         String date = sdf.format(calendar.getTime());
                         etRelease.setText(date);
