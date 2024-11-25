@@ -5,6 +5,7 @@ import android.os.Parcelable;
 import android.util.Log;
 
 import java.util.Date;
+import java.util.Objects;
 
 public class Movie implements Parcelable {
     private String title;
@@ -201,6 +202,19 @@ public class Movie implements Parcelable {
 
     public Float getRating() {
         return rating;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Movie movie = (Movie) o;
+        return Objects.equals(getTitle(), movie.getTitle()) && Objects.equals(getRelease(), movie.getRelease());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getTitle(), getRelease());
     }
 
     @Override

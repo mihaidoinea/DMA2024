@@ -82,8 +82,12 @@ public class MainActivity extends AppCompatActivity {
             public void onActivityResult(Movie movie) {
                 if (movie != null) {
                     Log.d("MainActivity", "Movie: " + movie);
-                    movieList.add(movie);
-                    movieAdapter.notifyDataSetChanged();
+                    if (movieList.contains(movie)) {
+                        Log.d("MainActivity", "Duplicate: " + movie);
+                    } else {
+                        movieList.add(movie);
+                        movieAdapter.notifyDataSetChanged();
+                    }
                 }
             }
         });
