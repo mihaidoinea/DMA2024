@@ -1,4 +1,4 @@
-package ro.ase.ie.g1105_s05;
+package ro.ase.ie.g1105_s05.activities;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -15,7 +15,6 @@ import android.widget.RatingBar;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.Switch;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,10 +22,13 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
+
+import ro.ase.ie.g1105_s05.R;
+import ro.ase.ie.g1105_s05.model.Genre;
+import ro.ase.ie.g1105_s05.model.Movie;
+import ro.ase.ie.g1105_s05.model.ParentalApprovalEnum;
 
 public class MovieActivity extends AppCompatActivity  {
 

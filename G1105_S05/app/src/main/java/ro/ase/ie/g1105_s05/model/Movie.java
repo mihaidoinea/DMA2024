@@ -1,4 +1,4 @@
-package ro.ase.ie.g1105_s05;
+package ro.ase.ie.g1105_s05.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;

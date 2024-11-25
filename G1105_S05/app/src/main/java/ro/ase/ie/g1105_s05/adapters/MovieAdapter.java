@@ -1,4 +1,4 @@
-package ro.ase.ie.g1105_s05;
+package ro.ase.ie.g1105_s05.adapters;
 
 import android.content.Context;
 import android.util.Log;
@@ -11,6 +11,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+
+import ro.ase.ie.g1105_s05.R;
+import ro.ase.ie.g1105_s05.model.Movie;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieHolder> {
 

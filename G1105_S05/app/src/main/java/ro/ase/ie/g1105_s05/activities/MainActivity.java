@@ -1,9 +1,8 @@
-package ro.ase.ie.g1105_s05;
+package ro.ase.ie.g1105_s05.activities;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -26,6 +25,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.Date;
 
+import ro.ase.ie.g1105_s05.adapters.MovieAdapter;
+import ro.ase.ie.g1105_s05.R;
+import ro.ase.ie.g1105_s05.model.Genre;
+import ro.ase.ie.g1105_s05.model.Movie;
+import ro.ase.ie.g1105_s05.model.ParentalApprovalEnum;
+
 public class MainActivity extends AppCompatActivity {
 
     ActivityResultLauncher<Intent> activityResultLauncher;
@@ -46,9 +51,7 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        Movie movie = new Movie("Test",2131.2,12, Float.parseFloat("2.5"),new Date(),
-                true, Genre.Action, ParentalApprovalEnum.PG13, "www.gogog.com");
-       // movieArrayList.add(movie);
+
         movieAdapter = new MovieAdapter(movieArrayList, MainActivity.this);
 
         initializeControls();

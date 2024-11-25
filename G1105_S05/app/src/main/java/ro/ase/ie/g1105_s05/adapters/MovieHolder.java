@@ -1,4 +1,4 @@
-package ro.ase.ie.g1105_s05;
+package ro.ase.ie.g1105_s05.adapters;
 
 import android.view.View;
 import android.widget.Button;
@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import ro.ase.ie.g1105_s05.R;
 
 public class MovieHolder extends RecyclerView.ViewHolder {
 
