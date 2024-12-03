@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.Date;
+import java.util.Objects;
 
 public class Movie implements Parcelable {
 
@@ -192,5 +193,18 @@ public class Movie implements Parcelable {
                 ", status=" + status +
                 ", posterUrl=" + posterUrl +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Movie)) return false;
+        Movie movie = (Movie) o;
+        return Objects.equals(getTitle(), movie.getTitle()) && Objects.equals(getRelease(), movie.getRelease());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getTitle(), getRelease());
     }
 }
