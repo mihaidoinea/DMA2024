@@ -30,6 +30,7 @@ import ro.ase.ie.g1105_s05.R;
 import ro.ase.ie.g1105_s05.model.Genre;
 import ro.ase.ie.g1105_s05.model.Movie;
 import ro.ase.ie.g1105_s05.model.ParentalApprovalEnum;
+import ro.ase.ie.g1105_s05.util.JsonUtil;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -50,6 +51,10 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        String jsonFromRes = JsonUtil.getJsonFromResources(this, R.raw.movies);
+        ArrayList<Movie> movies = JsonUtil.parseJsonContent(jsonFromRes);
+        movieArrayList.addAll(movies);
 
 
         movieAdapter = new MovieAdapter(movieArrayList, MainActivity.this);
