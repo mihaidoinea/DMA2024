@@ -74,8 +74,22 @@ public class MovieActivity extends AppCompatActivity {
             movie.setDuration(sbDuration.getProgress());
             movie.setRecommended(swRecommended.isChecked());
             movie.setRating(rbRating.getRating());
+        } else {
+            etTitle.setText(movie.getTitle());
+            etBudget.setText(movie.getBudget().toString());
+            etRelease.setText(sdf.format(movie.getRelease()));
+            etPoster.setText(movie.getPosterUrl());
+            sbDuration.setProgress(movie.getDuration());
+            int pos = 0;
+            for (int i = 0; i < GenreEnum.values().length; i++) {
+                if (movie.getGenre() == GenreEnum.values()[i])
+                    pos = i;
+            }
+            spGenre.setSelection(pos);
+            rbRating.setRating(movie.getRating());
+            swRecommended.setChecked(movie.getRecommended());
+            movieAction.setText("Update");
         }
-
     }
 
     private void initializeEvents() {
@@ -89,6 +103,10 @@ public class MovieActivity extends AppCompatActivity {
                         calendar.set(Calendar.YEAR, year);
                         calendar.set(Calendar.MONTH, month);
                         calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                        calendar.set(Calendar.HOUR, 0);
+                        calendar.set(Calendar.MINUTE, 0);
+                        calendar.set(Calendar.SECOND, 0);
+
                         etRelease.setText(sdf.format(calendar.getTime()));
                         movie.setRelease(calendar.getTime());
                     }

@@ -26,9 +26,11 @@ import java.util.ArrayList;
 
 import ro.ase.ie.g1106_s05.R;
 import ro.ase.ie.g1106_s05.adapters.MovieAdapter;
+import ro.ase.ie.g1106_s05.model.IMovieEvents;
 import ro.ase.ie.g1106_s05.model.Movie;
+import util.JsonUtil;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements IMovieEvents {
 
 
     ActivityResultLauncher<Intent> activityLauncher;
@@ -49,6 +51,10 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        String jsonFromResources = JsonUtil.getJsonFromResources(this, R.raw.movies);
+        ArrayList<Movie> movies = JsonUtil.parseJsonContent(jsonFromResources);
+        movieList.addAll(movies);
 
         movieAdapter = new MovieAdapter(movieList, MainActivity.this);
 
@@ -82,11 +88,14 @@ public class MainActivity extends AppCompatActivity {
             public void onActivityResult(Movie movie) {
                 if (movie != null) {
                     Log.d("MainActivity", "Movie: " + movie);
+                    int position = movieList.indexOf(movie);
                     if (movieList.contains(movie)) {
                         Log.d("MainActivity", "Duplicate: " + movie);
+                        movieList.set(position, movie);
+                        movieAdapter.notifyItemChanged(position);
                     } else {
                         movieList.add(movie);
-                        movieAdapter.notifyDataSetChanged();
+                        movieAdapter.notifyItemInserted(movieList.size());
                     }
                 }
             }
@@ -120,5 +129,13 @@ public class MainActivity extends AppCompatActivity {
         }
         else
             return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onMovieItemClick(int index) {
+        Intent secondActIntent = new Intent(getApplicationContext(), MovieActivity.class);
+        Movie movie = movieList.get(index);
+        secondActIntent.putExtra("movieKey", movie);
+        activityLauncher.launch(secondActIntent);
     }
 }
