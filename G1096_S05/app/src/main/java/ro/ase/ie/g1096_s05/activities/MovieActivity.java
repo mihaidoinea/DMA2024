@@ -71,7 +71,39 @@ public class MovieActivity extends AppCompatActivity {
             movie.setDuration(sbDuration.getProgress());
             movie.setRating(rbRating.getRating());
             movie.setParentalApproval(ParentalApprovalEnum.G);
+            movie.setRecommended(false);
+        } else {
+            etTitle.setText(movie.getTitle());
+            etBudget.setText(movie.getBudget().toString());
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MMMM-yyyy");
+            etRelease.setText(sdf.format(movie.getRelease()));
+            etPoster.setText(movie.getPosterUrl());
+            rbRating.setRating(movie.getRating());
+            swRecommended.setChecked(movie.getRecommended());
+            sbDuration.setProgress(movie.getDuration());
+            int position = movie.getGenre().ordinal();
+            spGenre.setSelection(position);
+            int id = R.id.rbParentGuidance;
+            switch (movie.getParentalApproval()) {
+                case PG:
+                    id = R.id.rbParentGuidance;
+                    break;
+                case PG13:
+                    id = R.id.rbPG13;
+                    break;
+                case R:
+                    id = R.id.rbR;
+                    break;
+                case NC17:
+                    id = R.id.rbNC17;
+                    break;
+                case G:
+                    id = R.id.rbGeneral;
+                    break;
+            }
+            rgApproval.check(id);
         }
+        movieAction.setText("Update");
 
     }
 

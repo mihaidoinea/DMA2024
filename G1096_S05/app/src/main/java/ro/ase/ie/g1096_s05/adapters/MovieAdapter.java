@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import ro.ase.ie.g1096_s05.R;
+import ro.ase.ie.g1096_s05.activities.MainActivity;
 import ro.ase.ie.g1096_s05.model.Movie;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieHolder> {
@@ -43,10 +44,20 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieHolder> {
         holder.movieRating.setRating(movie.getRating());
         holder.movieRelease.setText(sdf.format(movie.getRelease()));
 
-        String name = "sherlock_holmes";
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (context instanceof MainActivity) {
+                    ((MainActivity) context).onMovieItemClick(holder.getAdapterPosition());
+                }
+            }
+        });
+
+
+      /*  String name = "sherlock_holmes";
         int identifier = context.getResources()
                 .getIdentifier(name, "drawable", context.getPackageName());
-        holder.moviePoster.setImageResource(identifier);
+        holder.moviePoster.setImageResource(identifier);*/
 
     }
 
