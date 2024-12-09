@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import ro.ase.ie.g1105_s05.R;
 import ro.ase.ie.g1105_s05.activities.MainActivity;
 import ro.ase.ie.g1105_s05.model.Movie;
+import ro.ase.ie.g1105_s05.networking.DownloadTask;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieHolder> {
 
@@ -47,14 +49,26 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieHolder> {
             @Override
             public void onClick(View v) {
                 MainActivity mainActivity = (MainActivity) context;
-                mainActivity.onMovieItemClick(position);
+                mainActivity.onMovieItemClick(holder.getAdapterPosition());
             }
         });
-        /*String name = "sherlock_holmes";
-        int drawable = context.getResources()
-                .getIdentifier(name, "drawable", context.getPackageName());
-        holder.moviePoster.setImageResource(drawable);*/
 
+        holder.movieDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int position = collection.indexOf(movie);
+                boolean deleted = collection.remove(movie);
+                if(deleted)
+                {
+                    notifyItemRemoved(position);
+                    Toast.makeText(context, "Movie item removed!", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+        DownloadTask downloadTask = new DownloadTask(movie.getPosterUrl(), holder.moviePoster);
+        Thread thread = new Thread(downloadTask);
+        thread.start();
     }
 
     @Override

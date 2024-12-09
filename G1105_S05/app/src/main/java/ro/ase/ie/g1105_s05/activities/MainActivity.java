@@ -57,7 +57,6 @@ public class MainActivity extends AppCompatActivity implements IMovieEvents {
         ArrayList<Movie> movies = JsonUtil.parseJsonContent(jsonFromRes);
         movieArrayList.addAll(movies);
 
-
         movieAdapter = new MovieAdapter(movieArrayList, MainActivity.this);
 
         initializeControls();
@@ -105,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements IMovieEvents {
                             else
                             {
                                 movieArrayList.add(movie);
-                                movieAdapter.notifyDataSetChanged();
+                                movieAdapter.notifyItemInserted(movieArrayList.size()-1);
                             }
                         }
                     }
