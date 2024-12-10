@@ -29,17 +29,17 @@ public class Movie implements Parcelable {
     @ColumnInfo
     private Integer duration;
 
-    @Ignore
+    @ColumnInfo
     private Float rating;
-    @Ignore
+    @ColumnInfo
     private Boolean recommended;
 
-    @Ignore
+    @ColumnInfo
     private ParentalApprovalEnum status;
     @Ignore
     private Date release;
 
-    @Ignore
+    @ColumnInfo
     private String posterUrl;
 
 
