@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 import ro.ase.ie.g1105_s05.R;
 import ro.ase.ie.g1105_s05.activities.MainActivity;
@@ -20,6 +22,7 @@ import ro.ase.ie.g1105_s05.networking.DownloadTask;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieHolder> {
 
+    List<Movie> persistedMovies = new ArrayList<>();
     ArrayList<Movie> collection;
     Context context;
 
@@ -66,6 +69,21 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieHolder> {
             }
         });
 
+        holder.movieOptions.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if(checkedId == R.id.rbPersist)
+                {
+                    persistedMovies.add(movie);
+                }
+                else {
+                    if (persistedMovies.contains(movie)) {
+                        persistedMovies.remove(movie);
+                    }
+                }
+            }
+        });
+
         DownloadTask downloadTask = new DownloadTask(movie.getPosterUrl(), holder.moviePoster);
         Thread thread = new Thread(downloadTask);
         thread.start();
@@ -74,5 +92,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieHolder> {
     @Override
     public int getItemCount() {
         return collection.size();
+    }
+
+    public List<Movie> getPersistedMovies() {
+        return persistedMovies;
     }
 }

@@ -3,19 +3,43 @@ package ro.ase.ie.g1105_s05.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
 import java.util.Date;
 import java.util.Objects;
 
+@Entity(tableName = "movie")
 public class Movie implements Parcelable {
 
+    @PrimaryKey(autoGenerate = true)
+    private long movieId;
+
+    @ColumnInfo(name = "title")
     private String title;
+
+    @ColumnInfo(name = "genre")
     private Genre genre;
+
+    @ColumnInfo(name = "budget")
     private Double budget;
+
+    @ColumnInfo
     private Integer duration;
+
+    @Ignore
     private Float rating;
+    @Ignore
     private Boolean recommended;
+
+    @Ignore
     private ParentalApprovalEnum status;
+    @Ignore
     private Date release;
+
+    @Ignore
     private String posterUrl;
 
 
@@ -38,6 +62,7 @@ public class Movie implements Parcelable {
         this.posterUrl = posterUrl;
     }
 
+    @Ignore
     protected Movie(Parcel in) {
         title = in.readString();
         if (in.readByte() == 0) {
@@ -63,6 +88,7 @@ public class Movie implements Parcelable {
         status = ParentalApprovalEnum.valueOf(in.readString());
     }
 
+    @Ignore
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(title);
@@ -206,5 +232,13 @@ public class Movie implements Parcelable {
     @Override
     public int hashCode() {
         return Objects.hash(getTitle(), getRelease());
+    }
+
+    public long getMovieId() {
+        return movieId;
+    }
+
+    public void setMovieId(long movieId) {
+        this.movieId = movieId;
     }
 }

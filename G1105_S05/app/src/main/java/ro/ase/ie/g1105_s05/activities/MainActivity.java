@@ -24,9 +24,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import ro.ase.ie.g1105_s05.adapters.MovieAdapter;
 import ro.ase.ie.g1105_s05.R;
+import ro.ase.ie.g1105_s05.database.DatabaseManager;
+import ro.ase.ie.g1105_s05.database.MovieDao;
 import ro.ase.ie.g1105_s05.model.Genre;
 import ro.ase.ie.g1105_s05.model.IMovieEvents;
 import ro.ase.ie.g1105_s05.model.Movie;
@@ -41,6 +44,9 @@ public class MainActivity extends AppCompatActivity implements IMovieEvents {
 
     static ArrayList<Movie> movieArrayList = new ArrayList<>();
     MovieAdapter movieAdapter = null;
+
+    DatabaseManager databaseManager;
+    MovieDao movieDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +68,10 @@ public class MainActivity extends AppCompatActivity implements IMovieEvents {
         initializeControls();
 
         initiliazeEvents();
+
+        databaseManager = DatabaseManager.getInstance(this);
+        movieDao = databaseManager.getMovieDao();
+
     }
 
     private void initializeControls() {
@@ -131,13 +141,18 @@ public class MainActivity extends AppCompatActivity implements IMovieEvents {
         if(item.getItemId() == R.id.item_add_movie)
         {
             Intent intent = new Intent(getApplicationContext(), MovieActivity.class);
-
             activityResultLauncher.launch(intent);
             return true;
         }
         else if(item.getItemId() == R.id.item_about_app)
         {
             Toast.makeText(MainActivity.this, "G1105 @ DAM-CSIE", Toast.LENGTH_LONG).show();
+            return true;
+        } else if (item.getItemId() == R.id.persist) {
+            List<Movie> persistedMovies = movieAdapter.getPersistedMovies();
+            for (Movie movie : persistedMovies) {
+                movieDao.insert(movie);
+            }
             return true;
         }
         else

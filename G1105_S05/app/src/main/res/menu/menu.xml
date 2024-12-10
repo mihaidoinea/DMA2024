@@ -1,10 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item
-        android:id="@+id/item_add_movie"
-        android:title="Add movie" />
-    <item
-        android:id="@+id/item_about_app"
-        android:title="About" />
+    <group android:id="@+id/database">
+        <item
+            android:id="@+id/persist"
+            android:title="Persist"/>
+    </group>
+
+    <group android:id="@+id/operations">
+        <item
+            android:id="@+id/item_add_movie"
+            android:title="Add movie" />
+        <item
+            android:id="@+id/item_about_app"
+            android:title="About" />
+    </group>
+
+
+
+
 </menu>
