@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -23,9 +22,12 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import ro.ase.ie.g1106_s05.R;
 import ro.ase.ie.g1106_s05.adapters.MovieAdapter;
+import ro.ase.ie.g1106_s05.database.DatabaseManager;
+import ro.ase.ie.g1106_s05.database.MovieDao;
 import ro.ase.ie.g1106_s05.model.IMovieEvents;
 import ro.ase.ie.g1106_s05.model.Movie;
 import util.JsonUtil;
@@ -40,6 +42,8 @@ public class MainActivity extends AppCompatActivity implements IMovieEvents {
     static ArrayList<Movie> movieList = new ArrayList<>();
     MovieAdapter movieAdapter = null;
 
+    DatabaseManager databaseManager;
+    MovieDao movieDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +65,9 @@ public class MainActivity extends AppCompatActivity implements IMovieEvents {
         initializeControls();
 
         initializeEvents();
+
+        databaseManager = DatabaseManager.getInstance(this);
+        movieDao = databaseManager.getMovieReference();
     }
 
     private void initializeEvents() {
@@ -125,6 +132,12 @@ public class MainActivity extends AppCompatActivity implements IMovieEvents {
         else if(item.getItemId() == R.id.item_about)
         {
             Toast.makeText(MainActivity.this, "CSIE - DMA @ 2024", Toast.LENGTH_LONG).show();
+            return true;
+        } else if (item.getItemId() == R.id.item_persist_movie) {
+            Map<Integer, ArrayList<Movie>> movieOptions = movieAdapter.getMovieOptions();
+            ArrayList<Movie> movies = movieOptions.get(R.id.rbPersist);
+            for (Movie movie : movies)
+                movieDao.insert(movie);
             return true;
         }
         else

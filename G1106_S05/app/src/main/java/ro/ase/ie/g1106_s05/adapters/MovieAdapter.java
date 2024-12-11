@@ -5,12 +5,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import ro.ase.ie.g1106_s05.R;
 import ro.ase.ie.g1106_s05.activities.MainActivity;
@@ -18,12 +21,14 @@ import ro.ase.ie.g1106_s05.model.Movie;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieHolder> {
 
+    private Map<Integer, ArrayList<Movie>> movieOptions;
     private ArrayList<Movie> collection;
     private Context context;
 
     public MovieAdapter(ArrayList<Movie> collection, Context context) {
         this.collection = collection;
         this.context = context;
+        this.setMovieOptions(new HashMap<>());
     }
 
     @NonNull
@@ -47,7 +52,24 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieHolder> {
             @Override
             public void onClick(View v) {
                 if (context instanceof MainActivity) {
-                    ((MainActivity) context).onMovieItemClick(position);
+                    ((MainActivity) context).onMovieItemClick(holder.getAdapterPosition());
+                }
+            }
+        });
+
+        holder.movieOptions.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                getMovieOptions().computeIfAbsent(checkedId, integer -> new ArrayList<>()).add(movie);
+                if (checkedId == R.id.rbPersist) {
+                    ArrayList<Movie> movies = getMovieOptions().get(R.id.rbExport);
+                    if (movies.contains(movie))
+                        movies.remove(movie);
+                }
+                if (checkedId == R.id.rbExport) {
+                    ArrayList<Movie> movies = getMovieOptions().get(R.id.rbPersist);
+                    if (movies.contains(movie))
+                        movies.remove(movie);
                 }
             }
         });
@@ -61,5 +83,13 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieHolder> {
     @Override
     public int getItemCount() {
         return collection.size();
+    }
+
+    public Map<Integer, ArrayList<Movie>> getMovieOptions() {
+        return movieOptions;
+    }
+
+    public void setMovieOptions(Map<Integer, ArrayList<Movie>> movieOptions) {
+        this.movieOptions = movieOptions;
     }
 }
