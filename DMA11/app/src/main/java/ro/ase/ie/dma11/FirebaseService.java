@@ -39,6 +39,7 @@ public class FirebaseService {
 
     public void attachDataChangeEventListener(final Callback<List<Movie>> callback)
     {
+
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

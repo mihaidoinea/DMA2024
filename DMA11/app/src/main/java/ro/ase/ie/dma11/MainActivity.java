@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
                     movieList.clear();
                     movieList.addAll(result);
                     Log.d(TAG, "Movie" + movieList);
-                    movieAdapter = new MovieAdapter(getApplicationContext(), movieList);
+                    movieAdapter = new MovieAdapter(MainActivity.this, movieList);
                     recyclerView.setAdapter(movieAdapter);
                 }
             }
@@ -62,7 +62,8 @@ public class MainActivity extends AppCompatActivity {
         for(Movie movie: movieList)
         {
             int id = new Random().nextInt(99999999);
-            myRef.child("movie_"+id).setValue(movie);
+            movie.setMovieId("movie_" + id);
+            myRef.child(movie.getMovieId()).setValue(movie);
         }
 
         //reading from the Firebase
@@ -70,6 +71,13 @@ public class MainActivity extends AppCompatActivity {
         firebaseService.attachDataChangeEventListener(dataChangeCallback());
 
     }
+
+    public void movieClick(Movie movie)
+    {
+        movie.setTitle("New Movie Title");
+        firebaseService.upsert(movie);
+    }
+
     public void update(View view)
     {
         Movie movie = movieList.get(0);

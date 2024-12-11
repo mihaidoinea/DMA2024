@@ -55,6 +55,7 @@ public class MovieAdapter extends  RecyclerView.Adapter<MovieAdapter.MovieHolder
             @Override
             public void onClick(View view) {
                 Toast.makeText(mContext, "Clicked: " + item, Toast.LENGTH_SHORT).show();
+                ((MainActivity)mContext).movieClick(item);
             }
         });
         holder.btnSave.setOnClickListener(new View.OnClickListener() {
