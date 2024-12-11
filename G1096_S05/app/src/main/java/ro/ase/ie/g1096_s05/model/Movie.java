@@ -3,19 +3,39 @@ package ro.ase.ie.g1096_s05.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
 import java.util.Date;
 import java.util.Objects;
 
+@Entity(tableName = "movie_table")
 public class Movie implements Parcelable {
 
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo
+    private Integer movieId;
+
+    @ColumnInfo(name = "movieTitle")
     private String title;
+
+    @Ignore
     private Date release;
+    @ColumnInfo
     private Integer duration;
+    @ColumnInfo
     private Boolean recommended;
+    @ColumnInfo
     private GenreEnum genre;
+    @ColumnInfo
     private ParentalApprovalEnum parentalApproval;
+    @ColumnInfo
     private String posterUrl;
+    @ColumnInfo
     private Float rating;
+    @ColumnInfo
     private Double budget;
 
     public Movie() {
@@ -212,5 +232,13 @@ public class Movie implements Parcelable {
     @Override
     public int hashCode() {
         return Objects.hash(getTitle(), getRelease());
+    }
+
+    public Integer getMovieId() {
+        return movieId;
+    }
+
+    public void setMovieId(Integer movieId) {
+        this.movieId = movieId;
     }
 }
