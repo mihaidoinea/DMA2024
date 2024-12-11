@@ -60,15 +60,15 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieHolder> {
         holder.movieOptions.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                getMovieOptions().computeIfAbsent(checkedId, integer -> new ArrayList<>()).add(movie);
+                movieOptions.computeIfAbsent(checkedId, integer -> new ArrayList<>()).add(movie);
                 if (checkedId == R.id.rbPersist) {
-                    ArrayList<Movie> movies = getMovieOptions().get(R.id.rbExport);
-                    if (movies.contains(movie))
+                    ArrayList<Movie> movies = movieOptions.get(R.id.rbExport);
+                    if (movies != null && movies.contains(movie))
                         movies.remove(movie);
                 }
                 if (checkedId == R.id.rbExport) {
-                    ArrayList<Movie> movies = getMovieOptions().get(R.id.rbPersist);
-                    if (movies.contains(movie))
+                    ArrayList<Movie> movies = movieOptions.get(R.id.rbPersist);
+                    if (movies != null && movies.contains(movie))
                         movies.remove(movie);
                 }
             }
