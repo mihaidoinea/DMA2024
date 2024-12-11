@@ -8,9 +8,13 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverter;
+import androidx.room.TypeConverters;
 
 import java.util.Date;
 import java.util.Objects;
+
+import ro.ase.ie.g1106_s05.database.DateTypeConverter;
 
 @Entity(tableName = "movie")
 public class Movie implements Parcelable {
@@ -22,7 +26,8 @@ public class Movie implements Parcelable {
     @ColumnInfo(name = "movieTitle")
     private String title;
 
-    @Ignore
+    @TypeConverters(DateTypeConverter.class)
+    @ColumnInfo
     private Date release;
 
     @ColumnInfo
