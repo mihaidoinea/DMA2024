@@ -5,12 +5,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Function;
 
 import ro.ase.ie.g1096_s05.R;
 import ro.ase.ie.g1096_s05.activities.MainActivity;
@@ -20,10 +24,16 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieHolder> {
 
     private Context context;
     private ArrayList<Movie> collection;
+    private Map<Integer, ArrayList<Movie>> movieOptions;
+
+    public Map<Integer, ArrayList<Movie>> getMovieOptions() {
+        return movieOptions;
+    }
 
     public MovieAdapter(Context context, ArrayList<Movie> collection) {
         this.context = context;
         this.collection = collection;
+        this.movieOptions = new HashMap<>();
     }
 
     @NonNull
@@ -49,6 +59,24 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieHolder> {
             public void onClick(View v) {
                 if (context instanceof MainActivity) {
                     ((MainActivity) context).onMovieItemClick(holder.getAdapterPosition());
+                }
+            }
+        });
+
+        holder.movieOptions.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+                movieOptions.computeIfAbsent(checkedId, key -> new ArrayList<>()).add(movie);
+                if (checkedId == R.id.rbPersist) {
+                    ArrayList<Movie> movies = movieOptions.get(R.id.rbExport);
+                    if (movies != null && movies.contains(movie))
+                        movies.remove(movie);
+                }
+                if (checkedId == R.id.rbExport) {
+                    ArrayList<Movie> movies = movieOptions.get(R.id.rbPersist);
+                    if (movies != null && movies.contains(movie))
+                        movies.remove(movie);
                 }
             }
         });

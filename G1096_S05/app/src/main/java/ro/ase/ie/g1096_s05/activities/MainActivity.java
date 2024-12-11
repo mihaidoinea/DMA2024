@@ -26,6 +26,8 @@ import java.util.ArrayList;
 
 import ro.ase.ie.g1096_s05.R;
 import ro.ase.ie.g1096_s05.adapters.MovieAdapter;
+import ro.ase.ie.g1096_s05.database.DatabaseManager;
+import ro.ase.ie.g1096_s05.database.MovieDao;
 import ro.ase.ie.g1096_s05.model.IMovieItemEvents;
 import ro.ase.ie.g1096_s05.model.Movie;
 import util.JsonUtil;
@@ -38,6 +40,8 @@ public class MainActivity extends AppCompatActivity implements IMovieItemEvents 
     private static ArrayList<Movie> movieArrayList = new ArrayList<>();
     private MovieAdapter movieAdapter;
 
+    private DatabaseManager databaseManager;
+    private MovieDao movieDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +53,9 @@ public class MainActivity extends AppCompatActivity implements IMovieItemEvents 
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        databaseManager = DatabaseManager.getInstance(this);
+        movieDao = databaseManager.getMovieReference();
 
         String jsonFromResources = JsonUtil.getJsonFromResources(this, R.raw.movies);
         ArrayList<Movie> movies = JsonUtil.parseJsonContent(jsonFromResources);
@@ -114,6 +121,12 @@ public class MainActivity extends AppCompatActivity implements IMovieItemEvents 
         else if(item.getItemId() == R.id.item_about)
         {
             Toast.makeText(MainActivity.this, "CSIE - DAM @ 2024", Toast.LENGTH_LONG).show();
+            return true;
+        } else if (item.getItemId() == R.id.item_persist_movie) {
+            ArrayList<Movie> movies = movieAdapter.getMovieOptions().get(R.id.rbPersist);
+            for (Movie movie : movies) {
+                movieDao.insert(movie);
+            }
             return true;
         }
         else

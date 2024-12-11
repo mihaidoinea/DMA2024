@@ -5,6 +5,11 @@
     <item
         android:id="@+id/item_add_movie"
         android:title="Add movie" />
+
+    <item
+        android:id="@+id/item_persist_movie"
+        android:title="Persist movies" />
+
     <item
         android:id="@+id/item_about"
         android:title="About" />
