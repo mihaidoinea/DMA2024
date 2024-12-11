@@ -4,18 +4,46 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
 import java.util.Date;
 import java.util.Objects;
 
+@Entity(tableName = "movie")
 public class Movie implements Parcelable {
+
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo
+    private Integer movieId;
+
+    @ColumnInfo(name = "movieTitle")
     private String title;
+
+    @Ignore
     private Date release;
+
+    @ColumnInfo
     private Integer duration;
+
+    @ColumnInfo
     private Boolean recommended;
+
+    @ColumnInfo
     private GenreEnum genre;
+
+    @ColumnInfo
     private ParentalApprovalEnum approval;
+
+    @ColumnInfo
     private String posterUrl;
+
+    @ColumnInfo
     private Double budget;
+
+    @ColumnInfo
     private Float rating;
 
     public Movie() {
@@ -230,5 +258,13 @@ public class Movie implements Parcelable {
                 ", budget=" + budget +
                 ", rating=" + rating +
                 '}';
+    }
+
+    public Integer getMovieId() {
+        return movieId;
+    }
+
+    public void setMovieId(Integer movieId) {
+        this.movieId = movieId;
     }
 }
