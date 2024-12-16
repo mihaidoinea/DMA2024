@@ -15,6 +15,7 @@ import android.widget.RatingBar;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.Switch;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -44,7 +45,7 @@ public class MovieActivity extends AppCompatActivity  {
     private Button btnMovieAction;
     private String MovieTag = MovieActivity.class.getSimpleName();
     private Calendar calendar = Calendar.getInstance();
-    private SimpleDateFormat sdf;
+    private SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-YYYY");
 
     private Movie movie = null;
     @Override
@@ -57,7 +58,7 @@ public class MovieActivity extends AppCompatActivity  {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        sdf = new SimpleDateFormat("dd-MM-YYYY");
+
 
         initializeControls();
 
@@ -70,7 +71,7 @@ public class MovieActivity extends AppCompatActivity  {
             movie = new Movie();
             movie.setRating(rbRating.getRating());
             movie.setDuration(sbDuration.getProgress());
-            movie.setGenre(Genre.values()[spGenre.getSelectedItemPosition()]);
+            movie.setGenre(Genre.valueOf(spGenre.getSelectedItem().toString()));
             movie.setRecommended(swRecommended.isChecked());
         } else {
             etTitle.setText(movie.getTitle());
@@ -138,10 +139,9 @@ public class MovieActivity extends AppCompatActivity  {
         spGenre.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Genre genre = Genre.values()[position];
-                String genreString = (String) parent.getSelectedItem();
-                Genre genre1 = Genre.valueOf(genreString);
-                movie.setGenre(genre);
+                String genre = "Genre: " + parent.getSelectedItem();
+                Toast.makeText(MovieActivity.this, genre, Toast.LENGTH_SHORT).show();
+                movie.setGenre(Genre.valueOf(parent.getSelectedItem().toString()));
             }
 
             @Override

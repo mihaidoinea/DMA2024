@@ -1,8 +1,9 @@
 <resources>
     <string name="app_name">G1105_S05</string>
     <string-array name="movieGenre">
-        <item>Action</item>
-        <item>Adventure</item>
         <item>Drama</item>
+        <item>Action</item>
+        <item>Comedy</item>
+        <item>Adventure</item>
     </string-array>
 </resources>

@@ -13,7 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import ro.ase.ie.g1105_s05.R;
 import ro.ase.ie.g1105_s05.activities.MainActivity;
@@ -22,13 +23,18 @@ import ro.ase.ie.g1105_s05.networking.DownloadTask;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieHolder> {
 
-    List<Movie> persistedMovies = new ArrayList<>();
+    public Map<Integer, ArrayList<Movie>> getMovieOptions() {
+        return movieOptions;
+    }
+
+    Map<Integer, ArrayList<Movie>> movieOptions;
     ArrayList<Movie> collection;
     Context context;
 
     public MovieAdapter(ArrayList<Movie> collection, Context context) {
         this.collection = collection;
         this.context = context;
+        this.movieOptions = new HashMap<>();
     }
 
     @NonNull
@@ -72,13 +78,21 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieHolder> {
         holder.movieOptions.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if(checkedId == R.id.rbPersist)
-                {
-                    persistedMovies.add(movie);
+
+                movieOptions.computeIfAbsent(checkedId, key -> new ArrayList<>()).add(movie);
+
+                if(checkedId == R.id.rbPersist){
+                    ArrayList<Movie> movies = movieOptions.get(R.id.rbExport);
+                    if(movies!= null && movies.contains(movie))
+                    {
+                        movies.remove(movie);
+                    }
                 }
-                else {
-                    if (persistedMovies.contains(movie)) {
-                        persistedMovies.remove(movie);
+                if (checkedId == R.id.rbExport) {
+                    ArrayList<Movie> movies = movieOptions.get(R.id.rbPersist);
+                    if(movies != null && movies.contains(movie))
+                    {
+                        movies.remove(movie);
                     }
                 }
             }
@@ -94,7 +108,5 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieHolder> {
         return collection.size();
     }
 
-    public List<Movie> getPersistedMovies() {
-        return persistedMovies;
-    }
+
 }

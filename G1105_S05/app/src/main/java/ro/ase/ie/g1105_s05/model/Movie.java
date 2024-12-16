@@ -7,6 +7,7 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
 
 import java.util.Date;
 import java.util.Objects;
@@ -36,7 +37,9 @@ public class Movie implements Parcelable {
 
     @ColumnInfo
     private ParentalApprovalEnum status;
-    @Ignore
+
+    @TypeConverters(DateConverter.class)
+    @ColumnInfo
     private Date release;
 
     @ColumnInfo
