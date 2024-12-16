@@ -80,14 +80,28 @@ public class MovieActivity extends AppCompatActivity {
             etRelease.setText(sdf.format(movie.getRelease()));
             etPoster.setText(movie.getPosterUrl());
             sbDuration.setProgress(movie.getDuration());
-            int pos = 0;
-            for (int i = 0; i < GenreEnum.values().length; i++) {
-                if (movie.getGenre() == GenreEnum.values()[i])
-                    pos = i;
-            }
-            spGenre.setSelection(pos);
+            spGenre.setSelection(movie.getGenre().ordinal());
             rbRating.setRating(movie.getRating());
             swRecommended.setChecked(movie.getRecommended());
+            int id = R.id.rbGeneral;
+            switch (movie.getApproval()) {
+                case PG:
+                    id = R.id.rbParentGuidance;
+                    break;
+                case G:
+                    id = R.id.rbGeneral;
+                    break;
+                case R:
+                    id = R.id.rbR;
+                    break;
+                case NC17:
+                    id = R.id.rbNC17;
+                    break;
+                case PG13:
+                    id = R.id.rbPG13;
+                    break;
+            }
+            rgApproval.check(id);
             movieAction.setText("Update");
         }
     }

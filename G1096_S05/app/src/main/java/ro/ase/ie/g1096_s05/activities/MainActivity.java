@@ -122,10 +122,15 @@ public class MainActivity extends AppCompatActivity implements IMovieItemEvents 
         {
             Toast.makeText(MainActivity.this, "CSIE - DAM @ 2024", Toast.LENGTH_LONG).show();
             return true;
-        } else if (item.getItemId() == R.id.item_persist_movie) {
+        }
+        else if (item.getItemId() == R.id.item_persist_movie) {
             ArrayList<Movie> movies = movieAdapter.getMovieOptions().get(R.id.rbPersist);
-            for (Movie movie : movies) {
-                movieDao.insert(movie);
+            if(movies != null) {
+                for (Movie movie : movies) {
+                    long rowId = movieDao.insert(movie);
+                    int movieId = movieDao.getMovieId(rowId);
+                    movie.setMovieId(movieId);
+                }
             }
             return true;
         }
