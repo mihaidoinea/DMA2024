@@ -30,7 +30,7 @@ import ro.ase.ie.g1106_s05.database.DatabaseManager;
 import ro.ase.ie.g1106_s05.database.MovieDao;
 import ro.ase.ie.g1106_s05.model.IMovieEvents;
 import ro.ase.ie.g1106_s05.model.Movie;
-import util.JsonUtil;
+import ro.ase.ie.g1106_s05.util.JsonUtil;
 
 public class MainActivity extends AppCompatActivity implements IMovieEvents {
 
@@ -136,8 +136,11 @@ public class MainActivity extends AppCompatActivity implements IMovieEvents {
         } else if (item.getItemId() == R.id.item_persist_movie) {
             Map<Integer, ArrayList<Movie>> movieOptions = movieAdapter.getMovieOptions();
             ArrayList<Movie> movies = movieOptions.get(R.id.rbPersist);
-            for (Movie movie : movies)
+            for (Movie movie : movies) {
+                int id = movieDao.getMovieByTitleAndRelease(movie.getTitle(), movie.getRelease().getTime());
+                movie.setMovieId(id == 0 ? null : id);
                 movieDao.insert(movie);
+            }
             return true;
         }
         else

@@ -18,6 +18,7 @@ import java.util.Map;
 import ro.ase.ie.g1106_s05.R;
 import ro.ase.ie.g1106_s05.activities.MainActivity;
 import ro.ase.ie.g1106_s05.model.Movie;
+import ro.ase.ie.g1106_s05.networking.DownloadTask;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieHolder> {
 
@@ -78,6 +79,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieHolder> {
         int identifier = context.getResources()
                 .getIdentifier(name, "drawable", context.getPackageName());
         holder.moviePoster.setImageResource(identifier);*/
+
+        DownloadTask downloadTask = new DownloadTask(movie.getPosterUrl(), holder.moviePoster);
+        Thread thread = new Thread(downloadTask);
+        thread.start();
     }
 
     @Override
