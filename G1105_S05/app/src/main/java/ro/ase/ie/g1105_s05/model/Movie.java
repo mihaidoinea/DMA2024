@@ -18,7 +18,7 @@ import ro.ase.ie.g1105_s05.database.DateConverter;
 public class Movie implements Parcelable {
 
     @PrimaryKey(autoGenerate = true)
-    private long movieId;
+    private Long movieId;
 
     @ColumnInfo(name = "title")
     private String title;
@@ -239,11 +239,11 @@ public class Movie implements Parcelable {
         return Objects.hash(getTitle(), getRelease());
     }
 
-    public long getMovieId() {
+    public Long getMovieId() {
         return movieId;
     }
 
-    public void setMovieId(long movieId) {
+    public void setMovieId(Long movieId) {
         this.movieId = movieId;
     }
 }
