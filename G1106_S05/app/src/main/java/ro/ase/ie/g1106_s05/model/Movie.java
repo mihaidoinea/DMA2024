@@ -21,7 +21,7 @@ public class Movie implements Parcelable {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo
-    private Integer movieId;
+    private Long movieId;
 
     @ColumnInfo(name = "movieTitle")
     private String title;
@@ -265,11 +265,11 @@ public class Movie implements Parcelable {
                 '}';
     }
 
-    public Integer getMovieId() {
+    public Long getMovieId() {
         return movieId;
     }
 
-    public void setMovieId(Integer movieId) {
+    public void setMovieId(Long movieId) {
         this.movieId = movieId;
     }
 }

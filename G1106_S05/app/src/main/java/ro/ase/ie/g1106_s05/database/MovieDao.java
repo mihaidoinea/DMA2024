@@ -14,6 +14,6 @@ public interface MovieDao {
     long insert(Movie movie);
 
     @Query("SELECT movieId FROM movie WHERE movieTitle = :title AND release = :release")
-    int getMovieByTitleAndRelease(String title, Long release);
+    long getMovieByTitleAndRelease(String title, Long release);
 
 }
