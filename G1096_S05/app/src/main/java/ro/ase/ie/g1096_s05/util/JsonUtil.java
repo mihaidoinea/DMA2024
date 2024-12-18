@@ -1,4 +1,4 @@
-package util;
+package ro.ase.ie.g1096_s05.util;
 
 import android.content.Context;
 

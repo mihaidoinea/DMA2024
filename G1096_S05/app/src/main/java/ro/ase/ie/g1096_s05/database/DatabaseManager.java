@@ -8,7 +8,7 @@ import androidx.room.RoomDatabase;
 
 import ro.ase.ie.g1096_s05.model.Movie;
 
-@Database(version = 3, entities = {Movie.class})
+@Database(version = 1, entities = {Movie.class})
 public abstract class DatabaseManager extends RoomDatabase {
 
     private static final String DB_NAME = "movies.db";

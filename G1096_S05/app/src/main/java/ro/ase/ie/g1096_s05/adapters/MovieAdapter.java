@@ -19,6 +19,7 @@ import java.util.function.Function;
 import ro.ase.ie.g1096_s05.R;
 import ro.ase.ie.g1096_s05.activities.MainActivity;
 import ro.ase.ie.g1096_s05.model.Movie;
+import ro.ase.ie.g1096_s05.networking.DownloadTask;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieHolder> {
 
@@ -80,6 +81,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieHolder> {
                 }
             }
         });
+
+        DownloadTask downloadTask = new DownloadTask(movie.getPosterUrl(), holder.moviePoster);
+        Thread thread = new Thread(downloadTask);
+        thread.start();
 
 
       /*  String name = "sherlock_holmes";

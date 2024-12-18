@@ -15,4 +15,8 @@ public interface MovieDao {
 
     @Query("SELECT movieId FROM movie_table WHERE rowid = :rowId")
     int getMovieId(long rowId);
+
+    @Query("SELECT movieId FROM movie_table WHERE movieTitle = :title AND release = :release")
+    long getMovieByTitleAndRelease(String title, Long release);
+
 }

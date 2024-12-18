@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -30,7 +29,7 @@ import ro.ase.ie.g1096_s05.database.DatabaseManager;
 import ro.ase.ie.g1096_s05.database.MovieDao;
 import ro.ase.ie.g1096_s05.model.IMovieItemEvents;
 import ro.ase.ie.g1096_s05.model.Movie;
-import util.JsonUtil;
+import ro.ase.ie.g1096_s05.util.JsonUtil;
 
 public class MainActivity extends AppCompatActivity implements IMovieItemEvents {
 
@@ -127,9 +126,9 @@ public class MainActivity extends AppCompatActivity implements IMovieItemEvents 
             ArrayList<Movie> movies = movieAdapter.getMovieOptions().get(R.id.rbPersist);
             if(movies != null) {
                 for (Movie movie : movies) {
-                    long rowId = movieDao.insert(movie);
-                    int movieId = movieDao.getMovieId(rowId);
-                    movie.setMovieId(movieId);
+                    long movieId = movieDao.getMovieByTitleAndRelease(movie.getTitle(), movie.getRelease().getTime());
+                    movie.setMovieId(movieId == 0 ? null : movieId);
+                    movieDao.insert(movie);
                 }
             }
             return true;
