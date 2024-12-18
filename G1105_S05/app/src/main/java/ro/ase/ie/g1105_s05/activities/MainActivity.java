@@ -155,13 +155,19 @@ public class MainActivity extends AppCompatActivity implements IMovieEvents {
             ArrayList<Movie> movies = movieOptions.get(R.id.rbPersist);
             for(Movie movie:movies) {
                 long id = movieDao.getMovieByTitleAndRelease(movie.getTitle(), movie.getRelease().getTime());
-                if (id == 0)
+               /* if (id == 0)
                     movieDao.insert(movie);
                 else {
                     movie.setMovieId(id);
-                    movieDao.upsert(movie);
-                }
+                    movieDao.upsert(movie);*/
+                movie.setMovieId(id ==0?null:id);
+                movieDao.upsert(movie);
             }
+            return true;
+        }
+        else if( item.getItemId() == R.id.settings)
+        {
+
             return true;
         }
         else

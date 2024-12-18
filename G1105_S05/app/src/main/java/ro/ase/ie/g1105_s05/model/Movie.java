@@ -12,6 +12,8 @@ import androidx.room.TypeConverters;
 import java.util.Date;
 import java.util.Objects;
 
+import ro.ase.ie.g1105_s05.database.DateConverter;
+
 @Entity(tableName = "movie")
 public class Movie implements Parcelable {
 
