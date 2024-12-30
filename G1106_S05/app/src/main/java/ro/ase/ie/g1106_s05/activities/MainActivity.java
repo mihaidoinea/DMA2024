@@ -2,6 +2,7 @@ package ro.ase.ie.g1106_s05.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -55,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements IMovieEvents {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        R.color.blue
 
         String jsonFromResources = JsonUtil.getJsonFromResources(this, R.raw.movies);
         ArrayList<Movie> movies = JsonUtil.parseJsonContent(jsonFromResources);

@@ -9,6 +9,10 @@
         android:title="Persist movies" />
 
     <item
+        android:id="@+id/item_settings"
+        android:title="Settings"/>
+
+    <item
         android:id="@+id/item_about"
         android:title="About" />
 </menu>
