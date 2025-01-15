@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements IMovieEvents {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        R.color.blue
+
 
         String jsonFromResources = JsonUtil.getJsonFromResources(this, R.raw.movies);
         ArrayList<Movie> movies = JsonUtil.parseJsonContent(jsonFromResources);
